@@ -1,0 +1,1 @@
+console.log("Giveawy Entry Collection loaded")
