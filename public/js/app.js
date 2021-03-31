@@ -23688,15 +23688,53 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "API_PATH": () => (/* binding */ API_PATH),
 /* harmony export */   "API_KEY": () => (/* binding */ API_KEY),
 /* harmony export */   "DATE_FORMAT": () => (/* binding */ DATE_FORMAT),
-/* harmony export */   "DATE_ERROR": () => (/* binding */ DATE_ERROR)
+/* harmony export */   "DATE_ERROR": () => (/* binding */ DATE_ERROR),
+/* harmony export */   "DASHBOARD": () => (/* binding */ DASHBOARD)
 /* harmony export */ });
-/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
-console.log(process.env);
 var APP_PATH = '/app';
 var API_PATH = '/api/app';
 var API_KEY = 'b80930cedc93f75374ed241091b48df8';
 var DATE_FORMAT = "YYYY-MM-DD";
-var DATE_ERROR = "Must match ".concat(DATE_FORMAT, " format");
+var DATE_ERROR = "Must match ".concat(DATE_FORMAT, " format"); // dashboard.js
+
+var DASHBOARD = API_PATH + '/dashboard';
+
+/***/ }),
+
+/***/ "./resources/js/data/dashboard.js":
+/*!****************************************!*\
+  !*** ./resources/js/data/dashboard.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "multiplierHistoryFive": () => (/* binding */ multiplierHistoryFive)
+/* harmony export */ });
+/* harmony import */ var swr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! swr */ "./node_modules/swr/esm/index.js");
+/* harmony import */ var _actions_axiosInstance__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/axiosInstance */ "./resources/js/actions/axiosInstance.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants */ "./resources/js/constants/index.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helpers */ "./resources/js/helpers/index.js");
+
+
+
+ // export your axios instance to use within your app
+
+var fetcher = function fetcher(url) {
+  return _actions_axiosInstance__WEBPACK_IMPORTED_MODULE_1__.default.get(url, _helpers__WEBPACK_IMPORTED_MODULE_3__.requestOptions).then(function (res) {
+    return res.data;
+  });
+};
+
+function multiplierHistoryFive() {
+  var _useSWR = (0,swr__WEBPACK_IMPORTED_MODULE_0__.default)("".concat(_constants__WEBPACK_IMPORTED_MODULE_2__.DASHBOARD, "/multiplier-history/five"), fetcher),
+      data = _useSWR.data;
+
+  return {
+    data: data === null || data === void 0 ? void 0 : data.data
+  };
+}
 
 /***/ }),
 
@@ -24287,19 +24325,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _shopify_polaris__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @shopify/polaris */ "./node_modules/@shopify/polaris/dist/esm/components/Page/Page.js");
-/* harmony import */ var _shopify_polaris__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @shopify/polaris */ "./node_modules/@shopify/polaris/dist/esm/components/Card/Card.js");
+/* harmony import */ var _shopify_polaris__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @shopify/polaris */ "./node_modules/@shopify/polaris/dist/esm/components/Page/Page.js");
+/* harmony import */ var _shopify_polaris__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @shopify/polaris */ "./node_modules/@shopify/polaris/dist/esm/components/Card/Card.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _data_dashboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/dashboard */ "./resources/js/data/dashboard.js");
+
 
 
 
 var Dashboard = function Dashboard(_ref) {
-  var match = _ref.match;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_1__.Page, {
+  var loading = _ref.loading;
+
+  var _multiplierHistoryFiv = (0,_data_dashboard__WEBPACK_IMPORTED_MODULE_1__.multiplierHistoryFive)(),
+      data = _multiplierHistoryFiv.data;
+
+  var setMultipliers = function setMultipliers() {
+    var multipliers = [];
+
+    if (data) {
+      data.forEach(function (multiplier, index) {
+        multipliers.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+          className: "Polaris-List__Item"
+        }, multiplier.value, " - ", multiplier.label));
+      });
+      return multipliers;
+    }
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_2__.Page, {
     title: "Dashboard"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_2__.Card, {
-    title: "Customer"
-  }));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_3__.Card, {
+    title: "Latest 5 Multipliers",
+    sectioned: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ol", {
+    className: "Polaris-List Polaris-List--typeNumber"
+  }, setMultipliers())));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Dashboard);
@@ -24566,7 +24626,7 @@ var Settings = function Settings(_ref) {
     if (historyData && historyData.length > 0) {
       historyData.forEach(function (el) {
         var temp = [];
-        var keys = ['id', 'value', 'tag_label', 'created_format'];
+        var keys = ['id', 'value', 'label', 'created_format'];
         Object.keys(el).forEach(function (key) {
           if (keys.indexOf(key) !== -1) {
             temp.push(el[key]);

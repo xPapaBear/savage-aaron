@@ -152,7 +152,7 @@ const Settings = ({ loading }) => {
     if ( historyData && historyData.length > 0 ) {
       historyData.forEach( el => {
         let temp = []
-        let keys = [ 'id', 'value', 'tag_label', 'created_format' ]
+        let keys = [ 'id', 'value', 'label', 'created_format' ]
         Object.keys( el ).forEach( key => {
           if ( keys.indexOf( key ) !== -1 ) {
             temp.push( el[key] )
