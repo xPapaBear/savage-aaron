@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Multiplier;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveMultiplierRequest;
-use App\Models\MultiplierHistory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +26,7 @@ class MultiplierController extends Controller
     {
         $shop = Auth::user();
         if ( $shop ) {
-            $multiplier = Multiplier::orderBy('id', 'desc')->first();
+            $multiplier = Multiplier::where( 'status', 1 )->first();
 
             return response()->json([
                 'success' => true,
@@ -76,11 +75,6 @@ class MultiplierController extends Controller
                 $multiplier = Multiplier::create($request->validated());
             }
 
-            $history = new MultiplierHistory();
-            $history->value = $request->value;
-            $history->tag_label = $request->label;
-            $history->save();
-
 			$shopThemes = $this->getShopThemes($shop);
 			
 			// add snippet
@@ -113,7 +107,7 @@ class MultiplierController extends Controller
         $shop = Auth::user();
 
         if ( $shop )  {
-            $histories = MultiplierHistory::orderBy( 'created_at', 'DESC' )->get();
+            $histories = Multiplier::where( 'status', 0 )->orderBy( 'id', 'DESC' )->get();
 
             return response()->json([
                 'success' => true,
@@ -129,7 +123,7 @@ class MultiplierController extends Controller
         ], 401);
     }
 
-	public function addSnippet($storeThemes, $shop, $multiplierValue, $multiplierLabel = 'Entrier'){
+	public function addSnippet($storeThemes, $shop, $multiplierValue, $multiplierLabel = 'Label'){
 		logger(json_encode($storeThemes));
 
 		foreach ($storeThemes as $theme) {
@@ -145,13 +139,13 @@ class MultiplierController extends Controller
 						'/admin/api/themes/'.$theme->id.'/assets.json',
 						['asset' => ['key' => 'snippets/entry-points.liquid', 'value' => $snippet] ]
 					); 
-		logger(json_encode($add_snippet));
-	}
-			catch(\GuzzleHttp\Exception\ClientException $e){
+		        logger(json_encode($add_snippet));
+
+	        } catch(\GuzzleHttp\Exception\ClientException $e){
 				logger('add addSnippet throws client exception');
 				logger($e->getMessage() . " " . $e->getTraceAsString());
-			}
-			catch(\Exception $e){
+
+			} catch(\Exception $e){
 				logger('add addSnippet throws client exception');
 				logger($e->getMessage() . " " . $e->getTraceAsString());
 			}
