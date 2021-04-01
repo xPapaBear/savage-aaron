@@ -14,16 +14,8 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $shop = Auth::user();
-
-        if ( ! $shop ) {
-            return response()->json([
-                'success' => false,
-                'message' => __('messages.unauthenticated')
-            ], 401);
-        }
+    public function index() {
+        $shop = $this->checkAuth();
 
         $customers = $shop->customers()->with(['orders', 'entries'])->paginate(24);
 
@@ -34,14 +26,7 @@ class CustomerController extends Controller
     }
 
     public function filter(Request $request) {
-        $shop = Auth::user();
-
-        if ( ! $shop ) {
-            return response()->json([
-                'success' => false,
-                'message' => __('messages.unauthenticated')
-            ], 401);
-        }
+        $shop = $this->checkAuth();
 
         $customers = $shop->customers()->with(['orders' => function($q) use (&$request) {
             $q->filter($request);

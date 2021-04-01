@@ -20,6 +20,10 @@ class Entry extends Model
         'points'
     ];
 
+    protected $appends = [
+        'created_format'
+    ];
+
     public function shop()
     {
         return $this->belongsTo(User::class);
@@ -40,12 +44,19 @@ class Entry extends Model
         return $this->hasOne(Multiplier::class);
     }
 
+    /**
+     * Get Appends Attribute
+     */
+    public function getCreatedFormatAttribute() {
+        return date( 'Y-m-d h:i:a', strtotime( $this->created_at ) );
+    }
+
     public function scopeFilter($query, $request)
     {
         $startDate = date('Y-m-d', strtotime($request->get('start')));
         $endDate = date('Y-m-d', strtotime($request->get('end')));
         if ( ! empty( $startDate ) && ! empty( $endDate ) ) {
-            $query->where(function($q) use (&$startDate, $endDate){
+            $query->where(function($q) use ($startDate, $endDate){
                 $q->whereBetween('created_at', [
                     $startDate . " 00:00:00",
                     $endDate . " 23:59:59"

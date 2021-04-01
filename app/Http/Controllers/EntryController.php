@@ -16,7 +16,7 @@ class EntryController extends Controller
      */
     public function index()
     {
-        $shop = Auth::user();
+        $shop = $this->checkAuth();
         $entries = $shop->entries()->with(['customer', 'order'])->paginate(24);
 
         return response()->json([

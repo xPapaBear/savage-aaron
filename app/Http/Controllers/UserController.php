@@ -6,18 +6,8 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    //
-
     public function index() {
-        // Get the token
-        $shop = auth()->user();
-
-        if ( ! $shop ) {
-            return response()->json([
-                'success' => false,
-                'message' => __('messages.unauthenticated')
-            ], 401);
-        }
+        $shop = $this->checkAuth();
 
         $shopApi = $shop->api()->rest('GET', '/admin/shop.json')['body']['shop'];
 
@@ -28,8 +18,5 @@ class UserController extends Controller
                 'shop' => $shop
             ]
         ], 200);
-
-		
-
     }
 }

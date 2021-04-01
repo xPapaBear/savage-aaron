@@ -11,26 +11,20 @@ use Illuminate\Support\Facades\Auth;
 class CustomerProfilleOrderControler extends Controller
 {
     public function getUserProfileOrders( Request $request, $id ) {
-        $shop = Auth::user();
+        $shop = $this->checkAuth();
 
-        if ( $shop ) {
-            $profileOrder = CustomerProfileOrder::where( 'user_id', $id )->orderBy( 'created_at', 'DESC' )->get();
+        $profileOrder = CustomerProfileOrder::where( 'user_id', $id )->orderBy( 'created_at', 'DESC' )->get();
 
-            return response()->json([
-                'success' => true,
-                'message' => __('messages.success'),
-                'data' => $profileOrder
-            ]);
-        }
-
-        // Unathenticated
         return response()->json([
-            'success' => false,
-            'message' => __('messages.unathenticated')
-        ], 401);
+            'success' => true,
+            'message' => __('messages.success'),
+            'data' => $profileOrder
+        ]);
     }
 
     public function storeProfileOrder( ProfileOrderRequest $request ) {
+        $shop = $this->checkAuth();
+
         $multiplier = Multiplier::where('status', true)->first();
         $multiplier = $multiplier->value;
         $request->request->add( [ 'multiplier' => $multiplier ] );
