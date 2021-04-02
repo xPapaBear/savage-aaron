@@ -17,9 +17,9 @@ class SpaController extends Controller
      */
     public function index(Request $request)
     {
-        $user = Auth::user();
-        $token = JWTAuth::fromUser($user);
+        // $user = Auth::user();
+        // $token = JWTAuth::fromUser($user);
         // if ( ! auth()->user() ) return redirect()->route('home');
-        return view('spa', ['token' => $token]);
+        return view('spa');
     }
 }

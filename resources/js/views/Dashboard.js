@@ -1,65 +1,104 @@
-import { Card, Page, Layout } from '@shopify/polaris';
-import React from 'react'
-import { multiplierHistoryFive, topFiveCustomerEP } from '../data/dashboard'
+import React, { useCallback, useEffect } from 'react'
+import { BrowserRouter as Router, Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import {
+  AppProvider,
+  Avatar,
+  Card,
+  Page,
+  Layout,
+  ResourceList,
+  ResourceItem,
+  TextStyle,
+  Badge,
+  Stack,
+  TextContainer,
+  Button
+} from '@shopify/polaris';
+import { useData } from '../data';
+import { currencyFormat, arraySort } from '../helpers';
+import { isEmpty } from 'lodash';
 
-const Dashboard = ({loading}) => {
+const Dashboard = ({ location, response }, data, test) => {
+  const { data: dashboard, isLoading, isError, mutate } = useData('dashboard');
+  const { shop, shop_api: shopApi } = location.state?.user || {};
+  const history = useHistory();
 
-  const { multipliers } = multiplierHistoryFive()
+  const {
+    customers,
+  } = dashboard || {}
 
-  const { topFivesCustomers } = topFiveCustomerEP()
-
-  const setMultipliers = () => {
-    let arrs = []
-    if ( multipliers ) {
-      multipliers.forEach( ( multiplier, index ) => {
-        let el = <Card.Section title={`Multiplier #${index + 1}`}>
-          <p>{ `Value: ${multiplier.value}` } -- { `Label: ${multiplier.label}` }</p>
-          <br />
-          <small>{multiplier.created_format}</small>
-        </Card.Section>
-
-        arrs.push( el )
-      } )
-
-      return arrs
+  const handleNavigation = useCallback( (slug) => {
+    if ( slug ) {
+      history.push(slug, {
+        data: dashboard // your data array of objects
+      })
     }
-  }
+  }, [history, dashboard]);
 
-  const setTopFivesCustomers = () => {
-    let arrs = []
-    console.log( topFivesCustomers )
-    if ( topFivesCustomers ) {
-      topFivesCustomers.forEach( ( customer, index ) => {
-        if ( index < 5 ) {
-          let el = <Card.Section title={`Customer #${index + 1}`}>
-            <p>{ `Name: ${customer.full_name}` } -- { `Total Points: ${customer.total_points}` }</p>
-            <br />
-            <small>{customer.entries[0].created_format}</small>
-          </Card.Section>
+  useEffect(() => {
+    console.log(shopApi, location);
+  }, [dashboard, shopApi])
 
-          arrs.push( el )
-        }
-      } )
+  const customersMarkup = ! isEmpty(customers) ? (
+    <AppProvider
+      i18n={{
+        Polaris: {
+          ResourceList: {
+            showing: 'Showing Top Customers',
+          },
+        },
+      }}
+    >
+    <Card>
+      <ResourceList
+        resourceName={{singular: 'customer', plural: 'customers'}}
+        items={arraySort(customers, 'total_points')}
+        alternateTool={<Button>Email customers</Button>}
+        renderItem={(customer) => {
+          const {id, full_name, email, total_points, total_spent, store_customer_id} = customer;
+          const media = <Avatar customer size="medium" name={full_name} />;
 
-      return arrs
-    }
-  }
-
+          return (
+            <ResourceItem
+              id={id}
+              url={`/admin/customers/${store_customer_id}`}
+              media={media}
+              accessibilityLabel={`View details for ${full_name}`}
+            >
+              <Stack distribution="equalSpacing" alignment="center">
+                <Stack.Item>
+                  <TextContainer>
+                    <p>{full_name}</p>
+                    {email}
+                  </TextContainer>
+                </Stack.Item>
+                <Stack.Item>
+                  <Stack>
+                    <Badge status="info">
+                      {currencyFormat(shopApi, total_spent)}
+                    </Badge>
+                    <Badge status="success">
+                      {total_points} Entries
+                    </Badge>
+                  </Stack>
+                </Stack.Item>
+              </Stack>
+            </ResourceItem>
+          );
+        }}
+      />
+    </Card>
+  </AppProvider>
+  ) : null;
   return (
     <Page title="Dashboard">
-      <Layout>
-        <Layout.Section oneHalf>
-          <Card title="Latest 5 ( Five ) Multipliers">
-            { setMultipliers() }
-          </Card>
-        </Layout.Section>
-        
-        <Layout.Section oneHalf>
-          <Card title="Top 5 ( Five ) Customers Total Points">
-            { setTopFivesCustomers() }
-          </Card>
-        </Layout.Section>
-      </Layout>
+        <Layout>
+          <Layout.Section>
+            {/* Top 5 Customers */}
+            {customersMarkup}
+            {/* End of Top 5 Customers */}
+          </Layout.Section>
+        </Layout>
     </Page>
   );
 }

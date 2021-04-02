@@ -11,7 +11,21 @@ use Tymon\JWTAuth\Claims\Custom;
 class DashboardController extends Controller
 {
     public function index() {
-        
+        $shop = auth()->user();
+        if ( ! $shop ) dd('Busted');
+        $customers = Customer::all();
+        $customers->sortByDesc('total_points');
+        $multipliers = Multiplier::orderBy( 'id', 'DESC' )->limit( 5 )->get();
+
+        $data = [
+            'customers' => $customers,
+            'multipliers' => $multipliers
+        ];
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
     }
 
     /**
@@ -21,7 +35,7 @@ class DashboardController extends Controller
     public function topFiveCustomerEP( Request $request ) {
         $shop = $this->checkAuth();
 
-        $customers = Customer::get()->sortByDesc( 'total_points' )->toArray();
+        $customers = Customer::get()->sortBy( 'total_points' )->toArray();
 
         return response()->json([
             'success' => true,

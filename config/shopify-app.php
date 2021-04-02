@@ -329,11 +329,11 @@ return [
     */
 
     'scripttags' => [
-        [
-            'src' => env('SHOPIFY_SCRIPTTAG_1_SRC', env('APP_URL') . '/js/scripttags/app.js'),
-            'event' => env('SHOPIFY_SCRIPTTAG_1_EVENT', 'onload'),
-            'display_scope' => env('SHOPIFY_SCRIPTTAG_1_DISPLAY_SCOPE', 'online_store')
-        ],
+        // [
+        //     'src' => env('SHOPIFY_SCRIPTTAG_1_SRC', env('APP_URL') . '/js/scripttags/app.js'),
+        //     'event' => env('SHOPIFY_SCRIPTTAG_1_EVENT', 'onload'),
+        //     'display_scope' => env('SHOPIFY_SCRIPTTAG_1_DISPLAY_SCOPE', 'online_store')
+        // ],
     ],
 
     /*
@@ -366,7 +366,7 @@ return [
 
     'job_queues' => [
         'webhooks'           => env('WEBHOOKS_JOB_QUEUE', null),
-        'scripttags'         => env('SCRIPTTAGS_JOB_QUEUE', null),
+        // 'scripttags'         => env('SCRIPTTAGS_JOB_QUEUE', null),
         'after_authenticate' => env('AFTER_AUTHENTICATE_JOB_QUEUE', null),
     ],
 
