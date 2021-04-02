@@ -15,7 +15,7 @@ class CreateCustomerProfileOrdersTable extends Migration
     {
         Schema::create('customer_profile_orders', function (Blueprint $table) {
             $table->id();
-            $table->integer( 'user_id' );
+            $table->foreignId( 'user_id' )->constrained( 'users' )->onDelete( 'cascade' );
             $table->integer( 'order_id' );
             $table->float( 'total_items_price' );
             $table->integer( 'multiplier' );

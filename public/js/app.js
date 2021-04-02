@@ -23710,7 +23710,8 @@ var DASHBOARD = API_PATH + '/dashboard';
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "multiplierHistoryFive": () => (/* binding */ multiplierHistoryFive)
+/* harmony export */   "multiplierHistoryFive": () => (/* binding */ multiplierHistoryFive),
+/* harmony export */   "topFiveCustomerEP": () => (/* binding */ topFiveCustomerEP)
 /* harmony export */ });
 /* harmony import */ var swr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! swr */ "./node_modules/swr/esm/index.js");
 /* harmony import */ var _actions_axiosInstance__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/axiosInstance */ "./resources/js/actions/axiosInstance.js");
@@ -23726,13 +23727,31 @@ var fetcher = function fetcher(url) {
     return res.data;
   });
 };
+/**
+ * Get Latest 5 Multiplier History
+ * EP = Entry Points
+ */
+
 
 function multiplierHistoryFive() {
   var _useSWR = (0,swr__WEBPACK_IMPORTED_MODULE_0__.default)("".concat(_constants__WEBPACK_IMPORTED_MODULE_2__.DASHBOARD, "/multiplier-history/five"), fetcher),
       data = _useSWR.data;
 
   return {
-    data: data === null || data === void 0 ? void 0 : data.data
+    multipliers: data === null || data === void 0 ? void 0 : data.data
+  };
+}
+/**
+ * Get Top 5 Customer based on Entry Points
+ * EP = Entry Points
+ */
+
+function topFiveCustomerEP() {
+  var _useSWR2 = (0,swr__WEBPACK_IMPORTED_MODULE_0__.default)("".concat(_constants__WEBPACK_IMPORTED_MODULE_2__.DASHBOARD, "/top-five-customer/entry-points"), fetcher),
+      data = _useSWR2.data;
+
+  return {
+    topFivesCustomers: data === null || data === void 0 ? void 0 : data.data
   };
 }
 
@@ -24325,8 +24344,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _shopify_polaris__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @shopify/polaris */ "./node_modules/@shopify/polaris/dist/esm/components/Page/Page.js");
-/* harmony import */ var _shopify_polaris__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @shopify/polaris */ "./node_modules/@shopify/polaris/dist/esm/components/Card/Card.js");
+/* harmony import */ var _shopify_polaris__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @shopify/polaris */ "./node_modules/@shopify/polaris/dist/esm/components/Card/Card.js");
+/* harmony import */ var _shopify_polaris__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @shopify/polaris */ "./node_modules/@shopify/polaris/dist/esm/components/Page/Page.js");
+/* harmony import */ var _shopify_polaris__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @shopify/polaris */ "./node_modules/@shopify/polaris/dist/esm/components/Layout/Layout.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _data_dashboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/dashboard */ "./resources/js/data/dashboard.js");
 
@@ -24337,29 +24357,53 @@ var Dashboard = function Dashboard(_ref) {
   var loading = _ref.loading;
 
   var _multiplierHistoryFiv = (0,_data_dashboard__WEBPACK_IMPORTED_MODULE_1__.multiplierHistoryFive)(),
-      data = _multiplierHistoryFiv.data;
+      multipliers = _multiplierHistoryFiv.multipliers;
+
+  var _topFiveCustomerEP = (0,_data_dashboard__WEBPACK_IMPORTED_MODULE_1__.topFiveCustomerEP)(),
+      topFivesCustomers = _topFiveCustomerEP.topFivesCustomers;
 
   var setMultipliers = function setMultipliers() {
-    var multipliers = [];
+    var arrs = [];
 
-    if (data) {
-      data.forEach(function (multiplier, index) {
-        multipliers.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
-          className: "Polaris-List__Item"
-        }, multiplier.value, " - ", multiplier.label));
+    if (multipliers) {
+      multipliers.forEach(function (multiplier, index) {
+        var el = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_2__.Card.Section, {
+          title: "Multiplier #".concat(index + 1)
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Value: ".concat(multiplier.value), " -- ", "Label: ".concat(multiplier.label)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("small", null, multiplier.created_format));
+        arrs.push(el);
       });
-      return multipliers;
+      return arrs;
     }
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_2__.Page, {
+  var setTopFivesCustomers = function setTopFivesCustomers() {
+    var arrs = [];
+    console.log(topFivesCustomers);
+
+    if (topFivesCustomers) {
+      topFivesCustomers.forEach(function (customer, index) {
+        if (index < 5) {
+          var el = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_2__.Card.Section, {
+            title: "Customer #".concat(index + 1)
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Name: ".concat(customer.full_name), " -- ", "Total Points: ".concat(customer.total_points)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("small", null, customer.entries[0].created_format));
+          arrs.push(el);
+        }
+      });
+      return arrs;
+    }
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_3__.Page, {
     title: "Dashboard"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_3__.Card, {
-    title: "Latest 5 Multipliers",
-    sectioned: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ol", {
-    className: "Polaris-List Polaris-List--typeNumber"
-  }, setMultipliers())));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_4__.Layout, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_4__.Layout.Section, {
+    oneHalf: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_2__.Card, {
+    title: "Latest 5 ( Five ) Multipliers"
+  }, setMultipliers())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_4__.Layout.Section, {
+    oneHalf: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_2__.Card, {
+    title: "Top 5 ( Five ) Customers Total Points"
+  }, setTopFivesCustomers()))));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Dashboard);
