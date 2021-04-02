@@ -8,30 +8,24 @@ use App\Models\Multiplier;
 
 class CreateEntryAction
 {
-	public function execute($shopId, $orderId, $storeCustomerId)
+	public function execute($shopId, $orderId, $storeCustomerId, $points = 0)
 	{
 		try {
-			# Multiplier
 			$multiplier = Multiplier::latest()->first();
 
-			# Order
-			$order = Order::find($orderId);
-
-			# Entry points
-			$points = $order->total_line_items_price * $multiplier['value'];
-
-			$order = Entry::updateOrCreate(
+			$entry = Entry::updateOrCreate(
 				['order_id' => $orderId],
 				[
 					'user_id' => $shopId,
 					'customer_id' => $storeCustomerId,
 					'multiplier_id' => $multiplier->id,
 					'points' => $points,
-					'st'
 				]
 			);
 
-			return $order;
+			logger("Entry created/updated for $storeCustomerId" . json_encode($entry));
+
+			return $entry;
 
 		} catch (\Exception $e) {
 			//throw $th;

@@ -25,3 +25,14 @@ export const currencyFormat = ({primary_locale, country_code, currency}, amount)
   }).format(amount);
 
 export const formatDateValue = (date) => moment(date).format('YYYY-MM-DD');
+
+// Sort data based on column key
+export const arraySort = (data, key) => {
+  if ( ! data ) return data;
+
+  return data.sort( (a, b) => {
+      if(a[key] < b[key]) { return 1; }
+      if(a[key] > b[key]) { return -1; }
+      return 0;
+  });
+}

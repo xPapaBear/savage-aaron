@@ -31,7 +31,7 @@ import { fetchFilteredCustomers } from '../actions/fetchFilteredCustomers';
 let fetchFinal = true;
 
 const CustomerEntries = ({ location }) => {
-  const { data: customers, isLoading, isError, muate } = useData('customers');
+  const { data: customers, isLoading, isError, mutate } = useData('customers');
   const { shop, shop_api: shopApi } = location.state.data || {};
 
   const [filteredCustomers, setFilteredCustomers] = useState({});

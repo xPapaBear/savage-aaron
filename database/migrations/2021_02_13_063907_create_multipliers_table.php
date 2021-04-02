@@ -15,6 +15,12 @@ class CreateMultipliersTable extends Migration
     {
         Schema::create('multipliers', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')
+                  ->references('id')->on('users')
+                  ->onDelete('cascade');
+
             $table->unsignedTinyInteger('value')->unsigned()->default(1);
             $table->string('label')->default('Entries');
             $table->unsignedTinyInteger('status')->unsigned()->default(1);

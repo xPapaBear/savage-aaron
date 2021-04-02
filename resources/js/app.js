@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, Fragment } from 'react';
+import React, { useState, useCallback, useRef, Fragment, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import { BrowserRouter as Router, Route, Switch, useHistory, useLocation } from 'react-router-dom';
@@ -67,6 +67,7 @@ const App = () => {
   const handleNavigation = useCallback( (slug) => {
     if ( slug ) {
       history.push(slug, {
+        user: response,
         data: response // your data array of objects
       })
     }
@@ -91,6 +92,12 @@ const App = () => {
 
     setLoadingCount(count)
   };
+
+  useEffect(() => {
+    history.push("/", {
+      user: response // your data array of objects
+    })
+  }, [response])
 
   const toastMarkup = toastActive ? (
     <Toast onDismiss={toggleToastActive} content="Changes saved" />
@@ -149,7 +156,13 @@ const App = () => {
   const Routes = () => {
     return (
       <Switch>
-        <Route exact path="/" component={Dashboard} />
+        <Route
+          exact
+          exact path="/"
+          render={(props) => (
+            <Dashboard {...props} data={response} />
+          )}
+        />
         <Route
           exact
           path={`/customer-entries`}
