@@ -53,7 +53,13 @@ const Dashboard = ({ location, response }, data, test) => {
       <ResourceList
         resourceName={{singular: 'customer', plural: 'customers'}}
         items={arraySort(customers, 'total_points')}
-        alternateTool={<Button>Email customers</Button>}
+        alternateTool={
+          <Button
+            onClick={handleNavigation('/customer-entries')}
+            primary={true}
+          >
+            View Entries
+          </Button>}
         renderItem={(customer) => {
           const {id, full_name, email, total_points, total_spent, store_customer_id} = customer;
           const media = <Avatar customer size="medium" name={full_name} />;
