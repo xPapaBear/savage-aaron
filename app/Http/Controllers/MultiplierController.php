@@ -119,7 +119,7 @@ class MultiplierController extends Controller
                 ';
                 $snippet .= (string) "
                     <div class='entry-points' data-multiplier='$multiplierValue' data-label='$multiplierLabel'>
-                        {{ $multiplierValue | times: amount }} $multiplierLabel
+                        {{ $multiplierValue | times: amount }}
                     </div>
                 ";
 
