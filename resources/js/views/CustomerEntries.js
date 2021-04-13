@@ -220,8 +220,8 @@ const CustomerEntries = ({ location }) => {
     full_name,
     email,
     phone ?? '--',
-    <Badge status="success">{total_points}{}</Badge>,
-    shopApi ? currencyFormat(shopApi, total_spent) : total_spent,
+    <Badge status="success">{total_points}</Badge>,
+    <Badge status="info">{shopApi ? currencyFormat(shopApi, total_spent) : total_spent}</Badge>,
   ]
 
   const rows = ! isEmpty(filteredCustomers) ? filteredCustomers?.data?.map(

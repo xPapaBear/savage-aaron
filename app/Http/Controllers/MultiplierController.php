@@ -25,7 +25,7 @@ class MultiplierController extends Controller
     public function index(Request $request) {
         $shop = $this->checkAuth();
 
-        $multiplier = Multiplier::where( 'status', 1 )->first();
+        $multiplier = Multiplier::latest()->first();
 
         return response()->json([
             'success' => true,
@@ -63,7 +63,6 @@ class MultiplierController extends Controller
             if ( $multiplier->value === $request->get('value') ) {
                 $multiplier->update($request->validated());
             } else {
-                Multiplier::where('status', 1)->update(['status' => 0]);
                 $multiplier = Multiplier::create($request->validated());
             }
 
@@ -127,7 +126,7 @@ class MultiplierController extends Controller
                     'PUT',
                     '/admin/api/themes/'.$theme->id.'/assets.json',
                     ['asset' => ['key' => 'snippets/entry-points.liquid', 'value' => $snippet] ]
-                ); 
+                );
             } catch(\GuzzleHttp\Exception\ClientException $e){
                 logger('add addSnippet throws client exception');
                 logger($e->getMessage() . " " . $e->getTraceAsString());
