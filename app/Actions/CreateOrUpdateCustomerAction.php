@@ -8,7 +8,6 @@ class CreateOrUpdateCustomerAction
 {
 	public function execute(string $shopDomain, object $data)
 	{
-		logger("Customer data =" .  json_encode($data));
 		$shop = User::where('name', $shopDomain)->first();
 
 		$customer = Customer::updateOrCreate(
@@ -26,7 +25,7 @@ class CreateOrUpdateCustomerAction
 			]
 		);
 
-		logger('Customer = ' . json_encode($customer));
+		logger('Customer = ' . json_encode($customer->email));
 
 		return $customer;
 	}

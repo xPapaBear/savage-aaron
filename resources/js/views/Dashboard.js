@@ -36,7 +36,6 @@ const Dashboard = ({ location, response }, data, test) => {
   }, [history, dashboard]);
 
   useEffect(() => {
-    console.log(shopApi, location);
   }, [dashboard, shopApi])
 
   const customersMarkup = ! isEmpty(customers) ? (
@@ -55,7 +54,7 @@ const Dashboard = ({ location, response }, data, test) => {
         items={arraySort(customers, 'total_points')}
         alternateTool={
           <Button
-            onClick={handleNavigation('/customer-entries')}
+            onClick={() => handleNavigation('/customer-entries')}
             primary={true}
           >
             View Entries
@@ -80,11 +79,11 @@ const Dashboard = ({ location, response }, data, test) => {
                 </Stack.Item>
                 <Stack.Item>
                   <Stack>
-                    <Badge status="info">
-                      {currencyFormat(shopApi, total_spent)}
-                    </Badge>
                     <Badge status="success">
                       {total_points} Entries
+                    </Badge>
+                    <Badge status="info">
+                      {currencyFormat(shopApi, total_spent)}
                     </Badge>
                   </Stack>
                 </Stack.Item>

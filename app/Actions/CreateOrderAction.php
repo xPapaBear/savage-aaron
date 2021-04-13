@@ -17,17 +17,21 @@ class CreateOrderAction
 
 	public function execute(string $shopDomain, object $data, object $customer)
 	{
+		if ( isset($data) && empty($data) ) return false;
+
 		try {
 			\DB::beginTransaction();
 
 			$shop = User::domain($shopDomain)->first();
 
-			$multiplier = Multiplier::latest()->first();
+			$multiplier = Multiplier::latest()
+							->whereDate('created_at', '<=', $data->created_at)
+							->first();
 
-			
 			$totalGiftCardAmount = 0;
-			$giftCards = Arr::where($data->line_items, function ($item, $key) {
-				return $item->gift_card == true;
+
+			$giftCards = Arr::where((array) $data->line_items, function ($item, $key) {
+				return isset($item) && isset($item['gift_card']) && $item['gift_card'] == true;
 			});
 
 			if (! empty($giftCards)) {
@@ -37,7 +41,10 @@ class CreateOrderAction
 			}
 
 			$totalPrice = $data->total_line_items_price - $totalGiftCardAmount;
-			$totalPrice = $totalPrice - $data->current_total_discounts;
+
+			if ( isset($data) && isset($data->current_total_discounts) ) {
+				$totalPrice = $totalPrice - $data->current_total_discounts;
+			}
 
 			$points = $totalPrice * $multiplier->value;
 
@@ -53,10 +60,10 @@ class CreateOrderAction
 				]
 			);
 
-			logger("Order created/updated" . json_encode($order));
+			logger("Order created/updated" . $data->id);
 
 			if ( $multiplier->status ) {
-				$entry = $this->createEntry->execute($shop->id, $order->id, $customer->id, $points);
+				$entry = $this->createEntry->execute($shop, $order->id, $customer->id, $multiplier->id, $points);
 			}
 
 			\DB::commit();
