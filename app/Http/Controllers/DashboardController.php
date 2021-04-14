@@ -19,18 +19,18 @@ class DashboardController extends Controller
         $customers->sortByDesc('total_points');
         $multipliers = Multiplier::orderBy( 'id', 'DESC' )->limit(5)->get();
 
-        $orders = $shop->api()->request(
-            'GET',
-            '/admin/api/orders.json',
-            ['status' => 'open']
-        )['body']['orders'] ?? false;
+        // $orders = $shop->api()->request(
+        //     'GET',
+        //     '/admin/api/orders.json',
+        //     ['status' => 'open']
+        // )['body']['orders'] ?? false;
 
-        if ( isset($orders) ) {
-            foreach ($orders as $key => $order) {
-                $customer = $createUpdateCustomer->execute($shop->name, $order->customer);
-                $createOrder->execute($shop->name, $order, $customer);
-            }
-        }
+        // if ( isset($orders) ) {
+        //     foreach ($orders as $key => $order) {
+        //         $customer = $createUpdateCustomer->execute($shop->name, $order->customer);
+        //         $createOrder->execute($shop->name, $order, $customer);
+        //     }
+        // }
 
 		// $multipliers = Multiplier::whereDate('created_at', '<=', $data->created_at)
 		// ->orderBy('created_at', 'DESC')

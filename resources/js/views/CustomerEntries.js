@@ -136,11 +136,11 @@ const CustomerEntries = ({ location }) => {
   ]);
 
   const handleFetchFiltered = useCallback( async () => {
-    const { data } = await fetchFilteredCustomers({
-      start: selectedStartingDates.end,
-      end: selectedEndingDates.end
-    });
-    setFilteredCustomers(data)
+//     const { data } = await fetchFilteredCustomers({
+//       start: selectedStartingDates.end,
+//       end: selectedEndingDates.end
+//     });
+//     setFilteredCustomers(data)
   }, [selectedStartingDates, selectedEndingDates])
 
   const filters = [
