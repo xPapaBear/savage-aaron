@@ -24,9 +24,20 @@ class CreateOrderAction
 
 			$shop = User::domain($shopDomain)->first();
 
-			$multiplier = Multiplier::latest()
-							->whereDate('created_at', '<=', $data->created_at)
-							->first();
+			// $multiplier = Multiplier::latest()
+			// 	->whereDate('created_at', '<=', $data->created_at)
+			// 	->first();
+
+			$multiplier = Multiplier::whereDate('created_at', '<=', $data->created_at)
+			->latest()
+			->first(); 
+
+			// $multiplier = Multiplier::whereDate('created_at', '<=', $data->created_at)
+			// ->orderBy('created_at', 'DESC')
+			// ->first();
+
+			// Log::info($multiplier);
+							
 
 			$totalGiftCardAmount = 0;
 

@@ -15,27 +15,31 @@ class DashboardController extends Controller
     public function index(CreateOrUpdateCustomerAction $createUpdateCustomer, CreateOrderAction $createOrder) {
         $shop = auth()->user();
         if ( ! $shop ) dd('Busted');
-        $customers = $shop->customers()->orderBy('id', 'desc')->limit(5)->get();
+        $customers = $shop->customers()->orderBy('id', 'desc')->get();
         $customers->sortByDesc('total_points');
-        $multipliers = Multiplier::orderBy( 'id', 'DESC' )->limit( 5 )->get();
+        $multipliers = Multiplier::orderBy( 'id', 'DESC' )->get();
 
-        $orders = $shop->api()->request(
-            'GET',
-            '/admin/api/orders.json',
-            ['status' => 'open']
-        )['body']['orders'] ?? flase;
 
-        if ( isset($orders) ) {
-            foreach ($orders as $key => $order) {
-                $customer = $createUpdateCustomer->execute($shop->name, $order->customer);
-                $createOrder->execute($shop->name, $order, $customer);
-            }
-        }
+        // $orders = $shop->api()->request(
+        //     'GET',
+        //     '/admin/api/orders.json',
+        //     ['status' => 'open']
+        // )['body']['orders'] ?? false;
+
+        // if ( isset($orders) ) {
+        //     foreach ($orders as $key => $order) {
+        //         $customer = $createUpdateCustomer->execute($shop->name, $order->customer);
+        //         $createOrder->execute($shop->name, $order, $customer);
+        //     }
+        // }
+
+		// $multipliers = Multiplier::whereDate('created_at', '<=', $data->created_at)
+		// ->orderBy('created_at', 'DESC')
+		// ->first();
 
         $data = [
             'customers' => $customers,
             'multipliers' => $multipliers,
-            'orders' => $orders
         ];
 
         return response()->json([

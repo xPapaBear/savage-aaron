@@ -68,10 +68,10 @@ class MultiplierController extends Controller
 
             $shopThemes = $this->getShopThemes($shop);
             
-            // add snippet
-            logger("start adding snippet");
-            $this->addSnippet($shopThemes, $shop, $multiplier->value);
-            logger("end saving snippet");
+            // // add snippet
+            // logger("start adding snippet");
+            // $this->addSnippet($shopThemes, $shop, $multiplier->value);
+            // logger("end saving snippet");
 
             \DB::commit();
 
