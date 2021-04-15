@@ -30,6 +30,11 @@ class Customer extends Model
 
     public $appends = ['total_points', 'total_spent', 'full_name'];
 
+    public function shop()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function entries()
     {
         return $this->hasMany(Entry::class)->orderBy( 'id', 'DESC' );
