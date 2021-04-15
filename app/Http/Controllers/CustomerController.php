@@ -17,7 +17,7 @@ class CustomerController extends Controller
     public function index() {
         $shop = $this->checkAuth();
 
-        $customers = $shop->customers()->with(['orders', 'entries'])->get();
+        $customers = $shop->customers()->with(['orders', 'entries'])->paginate(25);
 
         return response()->json([
             'success' => true,
