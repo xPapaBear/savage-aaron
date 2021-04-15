@@ -207,7 +207,7 @@ const CustomerEntries = ({ location }) => {
       fetchFinal = true
       setTimeout(async () => {
         if ( fetchFinal ) {
-          handleFetchFiltered();
+          // handleFetchFiltered();
         }
       }, 700)
     }
@@ -224,9 +224,11 @@ const CustomerEntries = ({ location }) => {
     <Badge status="info">{shopApi ? currencyFormat(shopApi, total_spent) : total_spent}</Badge>,
   ]
 
-  const rows = ! isEmpty(filteredCustomers) ? filteredCustomers?.data?.map(
-    (data) => rowsFormat(data)) : ! isEmpty(customers) ? customers?.data?.map(
-    (data) => rowsFormat(data)) : null;
+  // const rows = ! isEmpty(filteredCustomers) ? filteredCustomers?.data?.map(
+  //   (data) => rowsFormat(data)) : ! isEmpty(customers) ? customers?.data?.map(
+  //   (data) => rowsFormat(data)) : null;
+
+  const rows = ! isEmpty(customers) ? customers?.map((data) => rowsFormat(data)) : null;
 
   const pageMarkup = (
     <Page
