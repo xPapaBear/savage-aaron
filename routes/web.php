@@ -1,5 +1,7 @@
 <?php
 
+use App\Mail\EmailEntry;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +21,7 @@ Route::get('/', function () {
     return view('spa');
 })->middleware(['auth.shopify'])->name('home');
 Route::get('/{path}', [App\Http\Controllers\SpaController::class, 'index'])->where('path', '(.*)');
+Route::get('/send', function(){
+	Mail::mailer('smtp')->to('dummyemail@gmail.com')->send(new EmailEntry());
+	logger('testt');
+});
