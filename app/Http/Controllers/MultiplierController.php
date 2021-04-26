@@ -122,11 +122,22 @@ class MultiplierController extends Controller
                     </div>
                 ";
 
+                $snippet2 = (string) "{{ $multiplierValue | times: amount }}";
+
+
                 $add_snippet = $shop->api()->request(
                     'PUT',
                     '/admin/api/themes/'.$theme->id.'/assets.json',
                     ['asset' => ['key' => 'snippets/entry-points.liquid', 'value' => $snippet] ]
                 );
+
+				
+                $add_snippet2 = $shop->api()->request(
+                    'PUT',
+                    '/admin/api/themes/'.$theme->id.'/assets.json',
+                    ['asset' => ['key' => 'snippets/entry-points2.liquid', 'value' => $snippet2] ]
+                );
+
             } catch(\GuzzleHttp\Exception\ClientException $e){
                 logger('add addSnippet throws client exception');
                 logger($e->getMessage() . " " . $e->getTraceAsString());

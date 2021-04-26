@@ -25,7 +25,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('customer_id')->unsigned()->nullable();
 
             $table->float('total_line_items_price')->nullable();
-
+			
             $table->longText('raw')->nullable();
             $table->softDeletes();
             $table->timestamps();
