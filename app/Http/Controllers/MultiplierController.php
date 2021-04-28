@@ -124,7 +124,6 @@ class MultiplierController extends Controller
 
                 $snippet2 = (string) "{{ $multiplierValue | times: amount }}";
 
-
                 $add_snippet = $shop->api()->request(
                     'PUT',
                     '/admin/api/themes/'.$theme->id.'/assets.json',
