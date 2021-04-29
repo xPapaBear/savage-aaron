@@ -12,21 +12,26 @@ const fetcher = url => axiosInstance.get(url, requestOptions).then(res => res.da
 export function useData(slug) {
   const { data, error, mutate } = useSWR(`${API_PATH}/${slug}`, fetcher);
   const loading = !error && !data;
+  let temp = null
 
-  let arrs = data?.data
+  if ( data?.data ) {
+    let arrs = data?.data
 
-  arrs.sort( function ( a, b ) {
-    var keyA = new Date( a.total_points ), keyB = new Date( b.total_points )
-    if ( keyA < keyB ) return -1
-    if ( keyA > keyB ) return 1
-    return 0
-  } )
+    arrs.sort( function ( a, b ) {
+      var keyA = new Date( a.total_points ), keyB = new Date( b.total_points )
+      if ( keyA < keyB ) return -1
+      if ( keyA > keyB ) return 1
+      return 0
+    } )
 
-  arrs.reverse()
+    arrs.reverse()
+    temp = arrs
+    console.log( arrs, data?.data )
+  }
 
   return {
     full_data: data,
-    data: arrs,
+    data: data?.data,
     isLoading: loading,
     isError: error,
     mutate
