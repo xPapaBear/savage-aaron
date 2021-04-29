@@ -13,9 +13,20 @@ export function useData(slug) {
   const { data, error, mutate } = useSWR(`${API_PATH}/${slug}`, fetcher);
   const loading = !error && !data;
 
+  let arrs = data?.data
+
+  arrs.sort( function ( a, b ) {
+    var keyA = new Date( a.total_points ), keyB = new Date( b.total_points )
+    if ( keyA < keyB ) return -1
+    if ( keyA > keyB ) return 1
+    return 0
+  } )
+
+  arrs.reverse()
+
   return {
     full_data: data,
-    data: data?.data,
+    data: arrs,
     isLoading: loading,
     isError: error,
     mutate
