@@ -5,20 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Multiplier;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Claims\Custom;
 use App\Actions\CreateOrderAction;
 use App\Actions\CreateOrUpdateCustomerAction;
+use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
     public function index(CreateOrUpdateCustomerAction $createUpdateCustomer, CreateOrderAction $createOrder) {
         $shop = $this->checkAuth();
         if ( ! $shop ) dd('Busted');
-        /* $customers = $shop->customers()->orderBy('id', 'DESC')->limit(5)->get();
-        $customers->sortByDesc('total_points'); */
+        $customers = $shop->customers()->orderBy('id', 'DESC')->limit(5)->get();
+        $customers->sortByDesc('total_points');
         $multipliers = Multiplier::orderBy( 'id', 'DESC' )->limit(5)->get();
-        $customers = $shop->customers()->with(['orders', 'entries']);
+
+        Log::info( $shop->customers()->get() );
 
         // $orders = $shop->api()->request(
         //     'GET',
