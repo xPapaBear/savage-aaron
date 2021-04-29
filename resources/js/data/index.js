@@ -17,14 +17,14 @@ export function useData(slug) {
   if ( data?.data ) {
     let arrs = data?.data
 
-    arrs.sort( function ( a, b ) {
+    /* arrs.sort( function ( a, b ) {
       var keyA = new Date( a.total_points ), keyB = new Date( b.total_points )
       if ( keyA < keyB ) return -1
       if ( keyA > keyB ) return 1
       return 0
     } )
 
-    arrs.reverse()
+    arrs.reverse() */
     temp = arrs
     console.log( arrs, data?.data )
   }
