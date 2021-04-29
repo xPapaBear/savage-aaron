@@ -17,7 +17,7 @@ class DashboardController extends Controller
         /* $customers = $shop->customers()->orderBy('id', 'DESC')->limit(5)->get();
         $customers->sortByDesc('total_points'); */
         $multipliers = Multiplier::orderBy( 'id', 'DESC' )->limit(5)->get();
-        $customers = $shop->customers()->with(['orders', 'entries'])->get();
+        $customers = $shop->customers()->with(['orders', 'entries'])->limit(5)->get();
 
         // $orders = $shop->api()->request(
         //     'GET',
