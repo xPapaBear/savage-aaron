@@ -15,9 +15,10 @@ class DashboardController extends Controller
     public function index(CreateOrUpdateCustomerAction $createUpdateCustomer, CreateOrderAction $createOrder) {
         $shop = auth()->user();
         if ( ! $shop ) dd('Busted');
-        $customers = $shop->customers()->orderBy('id', 'DESC')->limit(5)->get();
-        $customers->sortByDesc('total_points');
+        /* $customers = $shop->customers()->orderBy('id', 'DESC')->limit(5)->get();
+        $customers->sortByDesc('total_points'); */
         $multipliers = Multiplier::orderBy( 'id', 'DESC' )->limit(5)->get();
+        $customers = $shop->customers()->with(['orders', 'entries']);
 
         // $orders = $shop->api()->request(
         //     'GET',
