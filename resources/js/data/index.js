@@ -13,8 +13,6 @@ export function useData(slug) {
   const { data, error, mutate } = useSWR(`${API_PATH}/${slug}`, fetcher);
   const loading = !error && !data;
 
-  useSWR(`${API_TEST}/email`, fetcher);
-
   return {
     full_data: data,
     data: data?.data,
