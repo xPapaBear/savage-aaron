@@ -40,7 +40,7 @@ class DashboardController extends Controller
         // }
 
         $data = [
-            'customers' => $temp,
+            'customers' => $customers,
             'multipliers' => $multipliers,
             'temp' => array_reverse( array_slice( $temp, 0, 5, true) )
         ];
