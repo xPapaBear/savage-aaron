@@ -13,7 +13,7 @@ use App\Actions\CreateOrUpdateCustomerAction;
 class DashboardController extends Controller
 {
     public function index(CreateOrUpdateCustomerAction $createUpdateCustomer, CreateOrderAction $createOrder) {
-        $shop = auth()->user();
+        $shop = $this->checkAuth();
         if ( ! $shop ) dd('Busted');
         /* $customers = $shop->customers()->orderBy('id', 'DESC')->limit(5)->get();
         $customers->sortByDesc('total_points'); */
