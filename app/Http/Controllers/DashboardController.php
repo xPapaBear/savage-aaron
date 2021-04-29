@@ -28,7 +28,9 @@ class DashboardController extends Controller
             return $a['total_points'] <=> $b['total_points'];
         } );
 
-        $temp = array_reverse( array_slice( $temp, 0, 5, true) );
+        $temp = array_reverse( $temp );
+
+        $temp = array_slice( $temp, 0, 5, true );
 
         // $orders = $shop->api()->request(
         //     'GET',
