@@ -18,6 +18,11 @@ class DashboardController extends Controller
         $customers->sortByDesc('total_points'); */
         $multipliers = Multiplier::orderBy( 'id', 'DESC' )->limit(5)->get();
         $customers = $shop->customers()->with(['orders', 'entries'])->limit(5)->get();
+        $temp = $shop->customers()->with(['orders', 'entries'])->get()->toArray();
+
+        usort( $temp, function ( $a, $b ) {
+            return $a['total_points'] <=> $b['total_points'];
+        } );
 
         // $orders = $shop->api()->request(
         //     'GET',
@@ -35,6 +40,7 @@ class DashboardController extends Controller
         $data = [
             'customers' => $customers,
             'multipliers' => $multipliers,
+            'temp' => array_reverse( $temp )
         ];
 
         return response()->json([
