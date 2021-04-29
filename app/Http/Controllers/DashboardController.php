@@ -46,7 +46,7 @@ class DashboardController extends Controller
         // }
 
         $data = [
-            'customers' => $customers,
+            'customers' => $temp,
             'multipliers' => $multipliers,
             'temp' => $temp,
             'notSort' => $notSort
