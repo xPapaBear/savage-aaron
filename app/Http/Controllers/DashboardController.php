@@ -24,6 +24,9 @@ class DashboardController extends Controller
         usort( $temp, function ( $a, $b ) {
             return $a['total_points'] <=> $b['total_points'];
         } );
+        usort( $notSort, function ( $a, $b ) {
+            return $a['total_points'] <=> $b['total_points'];
+        } );
 
         $temp = array_reverse( array_slice( $temp, 0, 5, true) );
 
