@@ -24,6 +24,8 @@ class DashboardController extends Controller
             return $a['total_points'] <=> $b['total_points'];
         } );
 
+        $temp = array_reverse( array_slice( $temp, 0, 5, true) );
+
         // $orders = $shop->api()->request(
         //     'GET',
         //     '/admin/api/orders.json',
@@ -38,9 +40,9 @@ class DashboardController extends Controller
         // }
 
         $data = [
-            'customers' => $customers,
+            'customers' => $temp,
             'multipliers' => $multipliers,
-            'temp' => array_reverse( $temp )
+            'temp' => array_reverse( array_slice( $temp, 0, 5, true) )
         ];
 
         return response()->json([
