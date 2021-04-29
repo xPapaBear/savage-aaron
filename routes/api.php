@@ -80,5 +80,5 @@ Route::group(['prefix' => 'test'], function () {
     /**
      * Dashboard Top 5 Customer Entry Points
      */
-    Route::get('dashboard-top-five-customer', [TestController::class, 'testTopCustomerEP']);
+    Route::get('email', [TestController::class, 'testTopCustomerEP']);
 });

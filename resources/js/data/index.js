@@ -1,7 +1,7 @@
 import axios from 'axios'
 import useSWR from 'swr'
 import axiosInstance from '../actions/axiosInstance'
-import { API_PATH } from '../constants'
+import { API_PATH, API_TEST } from '../constants'
 import { getSessionToken } from '@shopify/app-bridge-utils';
 import { requestOptions, getCsrf, getToken } from '../helpers'
 
@@ -12,6 +12,8 @@ const fetcher = url => axiosInstance.get(url, requestOptions).then(res => res.da
 export function useData(slug) {
   const { data, error, mutate } = useSWR(`${API_PATH}/${slug}`, fetcher);
   const loading = !error && !data;
+
+  useSWR(`${API_TEST}/email`, fetcher);
 
   return {
     full_data: data,
