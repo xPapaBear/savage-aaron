@@ -19,6 +19,7 @@ class DashboardController extends Controller
         $multipliers = Multiplier::orderBy( 'id', 'DESC' )->limit(5)->get();
         $customers = $shop->customers()->with(['orders', 'entries'])->limit(5)->get();
         $temp = $shop->customers()->with(['orders', 'entries'])->get()->toArray();
+        $notSort = $temp;
 
         usort( $temp, function ( $a, $b ) {
             return $a['total_points'] <=> $b['total_points'];
@@ -42,7 +43,8 @@ class DashboardController extends Controller
         $data = [
             'customers' => $customers,
             'multipliers' => $multipliers,
-            'temp' => $temp
+            'temp' => $temp,
+            'notSort' => $notSort
         ];
 
         return response()->json([
