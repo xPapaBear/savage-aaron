@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailEntry;
 
 class TestController extends Controller
 {
@@ -11,6 +13,6 @@ class TestController extends Controller
      * EP = Entry Points
      */
     public function testTopCustomerEP( Request $request ) {
-        
+        Mail::to( 'markgerald08.24@gmail.com' )->send(new EmailEntry( 10, 10, 'TEST TEST', 10, 10, 10 ));
     }
 }
