@@ -42,7 +42,7 @@ class DashboardController extends Controller
         $data = [
             'customers' => $customers,
             'multipliers' => $multipliers,
-            'temp' => array_reverse( array_slice( $temp, 0, 5, true) )
+            'temp' => $temp
         ];
 
         return response()->json([
