@@ -14,5 +14,7 @@ class TestController extends Controller
      */
     public function testTopCustomerEP( Request $request ) {
         Mail::to( 'markgerald08.24@gmail.com' )->send(new EmailEntry( 10, 10, 'TEST TEST', 10, 10, 10 ));
+
+        Mail::mailer('smtp')->to('markgerald08.24@gmail.com')->send(new EmailEntry(10, 10, 'TEST TEST', 10, 10, 10));
     }
 }

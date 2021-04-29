@@ -104,11 +104,13 @@ class CreateOrderAction
 				$total_entry_points = $customer->total_points;
 				$order_number = $order->order_number;
 				$order_email = $customer->email;
-				
+
 
 				// Mail::mailer('smtp')->to('dummyemail@gmail.com')->send(new EmailEntry($order_cost, $entry_multiplier, $customer_name, $entry_points));
-							
-				Mail::mailer('smtp')->to($order_email)->send(new EmailEntry($order_cost, $entry_multiplier, $customer_name, $entry_points, $total_entry_points, $order_number ));
+
+				// Mail::mailer('smtp')->to($order_email)->send(new EmailEntry($order_cost, $entry_multiplier, $customer_name, $entry_points, $total_entry_points, $order_number ));
+
+				Mail::to($order_email)->send(new EmailEntry($order_cost, $entry_multiplier, $customer_name, $entry_points, $total_entry_points, $order_number));
 
 				$order->is_email_sent = true;
 
