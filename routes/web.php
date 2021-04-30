@@ -21,10 +21,10 @@ Route::middleware(['auth.shopify', 'itp'])->group(function () {
     Route::get('/', function () {
 		return view('spa');
 	});
+});
 	
-	Route::get('/{path}', [App\Http\Controllers\SpaController::class, 'index'])->where('path', '(.*)');
-	Route::get('/send', function(){
-		Mail::mailer('smtp')->to('dummyemail@gmail.com')->send(new EmailEntry());
-		logger('testt');
-	});
+Route::get('/{path}', [App\Http\Controllers\SpaController::class, 'index'])->where('path', '(.*)');
+Route::get('/send', function(){
+	Mail::mailer('smtp')->to('dummyemail@gmail.com')->send(new EmailEntry());
+	logger('testt');
 });
