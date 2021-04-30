@@ -46,7 +46,7 @@ class EmailEntry extends Mailable
     public function build()
     {
 
-        return $this->from('support@savagecardclub.com')->subject('Savage Card Club – Your Entries Are In!')->view('email.template')->with(array(
+        return $this->subject('Savage Card Club – Your Entries Are In!')->view('email.template')->with(array(
 			'customer_name' => $this->customer_name,
 			'order_cost' => $this->order_cost,
 			'entry_multiplier' => $this->entry_multiplier,
