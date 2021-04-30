@@ -3,8 +3,6 @@ namespace App\Actions;
 
 use App\Models\Customer;
 use App\Models\Entry;
-use App\Models\Multiplier;
-use App\Models\Order;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,6 +10,7 @@ class CreateEntryAction
 {
 	public function execute($shop, $orderId, $storeCustomerId, $multiplierId, $points = 0)
 	{
+		\Log::info( '===== CLASS :: CreateEntryAction :: START =====' );
 		try {
 			$entry = Entry::updateOrCreate(
 				['order_id' => $orderId],
@@ -23,9 +22,13 @@ class CreateEntryAction
 				]
 			);
 
+			\Log::info( '$entry:: ' . $entry );
+
 			$customer = Customer::find($storeCustomerId);
+			\Log::info( '$customer:: ' . $customer );
 
 			$totalEntries = $customer->total_points;
+			\Log::info( '$totalEntries:: ' . $totalEntries );
 
 			$user = User::where('id', $shop->id)->first();
 			Auth::login($user);
@@ -41,8 +44,8 @@ class CreateEntryAction
 					"value_type" => "integer"
 				]]
 			);
-
-			logger("Entry created/updated for $storeCustomerId");
+			
+			\Log::info( 'Entry created/updated for' . $storeCustomerId );
 
 			return $entry;
 
@@ -51,5 +54,6 @@ class CreateEntryAction
 			\Log::error($e->getMessage());
 			\Log::error($e->getTraceAsString());
 		}
+		\Log::info( '===== CLASS :: CreateEntryAction :: END =====' );
 	}
 }
