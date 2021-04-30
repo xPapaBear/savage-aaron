@@ -39,8 +39,6 @@ class SendTestEmail extends Command
      */
     public function handle()
     {
-        Mail::to( $this->argument( 'email' ) )->send(new EmailEntry( 10, 10, 'TEST1 TEST1', 10, 10, 10 ));
-
-        Mail::mailer('smtp')->to($this->argument( 'email' ))->send(new EmailEntry(10, 10, 'TEST2 TEST2', 10, 10, 10));
+        Mail::to( $this->argument( 'email' ) )->send( new EmailEntry( 10, 10, 'TEST1 TEST1', 10, 10, 10 ) );
     }
 }
