@@ -13,7 +13,7 @@ class SendTestEmail extends Command
      *
      * @var string
      */
-    protected $signature = 'send:testmail';
+    protected $signature = 'send:testmail {email}';
 
     /**
      * The console command description.
@@ -39,8 +39,8 @@ class SendTestEmail extends Command
      */
     public function handle()
     {
-        Mail::to( 'gapafex637@gridmire.com' )->send(new EmailEntry( 10, 10, 'TEST1 TEST1', 10, 10, 10 ));
+        Mail::to( $this->argument( 'email' ) )->send(new EmailEntry( 10, 10, 'TEST1 TEST1', 10, 10, 10 ));
 
-        Mail::mailer('smtp')->to('gapafex637@gridmire.com')->send(new EmailEntry(10, 10, 'TEST2 TEST2', 10, 10, 10));
+        Mail::mailer('smtp')->to($this->argument( 'email' ))->send(new EmailEntry(10, 10, 'TEST2 TEST2', 10, 10, 10));
     }
 }
