@@ -90,7 +90,7 @@ const Settings = ({ loading }) => {
         giveaway_end_date: selectedDates.end
       }
 
-      const {data, message, success} = await saveSettings(requestData, defaultData.id);
+      const {data, message, success} = await saveSettings(requestData, defaultData?.id);
 
       setDefaultData(data);
     } catch (error) {

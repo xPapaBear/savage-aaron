@@ -7,7 +7,6 @@ use App\Models\Multiplier;
 Use App\Models\Order;
 Use App\Models\Entry;
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
 
 class CustomerEntriesSeeder extends Seeder
 {
