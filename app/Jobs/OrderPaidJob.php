@@ -52,8 +52,8 @@ class OrderPaidJob implements ShouldQueue
         $customer = $createUpdateCustomer->execute($this->shopDomain, $this->data->customer); // Create or update customer
 
         \Log::info( '===== CLASS :: OrderPaidJob :: START =====' );
-        \Log::info( 'Customer Data:: ' . $customer );
         \Log::info( '$this->data:: ' . $this->data );
+        \Log::info( '$this->data->customer:: ' . $this->data->customer );
         \Log::info( '$customer:: ' . $customer );
         \Log::info( '===== CLASS :: OrderPaidJob :: END =====' );
 
