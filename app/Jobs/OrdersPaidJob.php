@@ -10,7 +10,7 @@ use stdClass;
 use App\Actions\CreateOrderAction;
 use App\Actions\CreateOrUpdateCustomerAction;
 
-class OrderPaidJob implements ShouldQueue
+class OrdersPaidJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
