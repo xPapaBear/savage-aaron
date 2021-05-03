@@ -22,13 +22,13 @@ class CreateEntryAction
 				]
 			);
 
-			\Log::info( '$entry:: ' . $entry );
+			\Log::info( '$entry:: ' . json_encode( $entry ) );
 
 			$customer = Customer::find($storeCustomerId);
-			\Log::info( '$customer:: ' . $customer );
+			\Log::info( '$customer:: ' . json_encode( $customer ) );
 
 			$totalEntries = $customer->total_points;
-			\Log::info( '$totalEntries:: ' . $totalEntries );
+			\Log::info( '$totalEntries:: ' . json_encode( $totalEntries ) );
 
 			$user = User::where('id', $shop->id)->first();
 			Auth::login($user);
@@ -45,7 +45,7 @@ class CreateEntryAction
 				]]
 			);
 			
-			\Log::info( 'Entry created/updated for' . $storeCustomerId );
+			\Log::info( 'Entry created/updated for' . json_encode( $storeCustomerId ) );
 
 			return $entry;
 
