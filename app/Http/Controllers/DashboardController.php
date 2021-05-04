@@ -16,8 +16,8 @@ class DashboardController extends Controller
         if ( ! $shop ) dd('Busted');
         /* $customers = $shop->customers()->orderBy('id', 'DESC')->limit(5)->get();
         $customers->sortByDesc('total_points'); */
-        $multipliers = Multiplier::orderBy( 'id', 'DESC' )->limit(5)->get();
-        $customers = $shop->customers()->with(['orders', 'entries'])->limit(5)->get();
+        $multipliers = Multiplier::orderBy( 'id', 'DESC' )->paginate(10)->get();
+        $customers = $shop->customers()->with(['orders', 'entries'])->paginate(10)->get();
         $temp = $shop->customers()->with(['orders', 'entries'])->get()->toArray();
         $notSort = $temp;
 
@@ -80,7 +80,7 @@ class DashboardController extends Controller
     public function multiplierHistoryFive() {
         $shop = $this->checkAuth();
         
-        $multiplierHistory = Multiplier::orderBy( 'id', 'DESC' )->limit( 5 )->get();
+        $multiplierHistory = Multiplier::orderBy( 'id', 'DESC' )->paginate( 10 )->get();
 
         return response()->json([
             'success' => true,

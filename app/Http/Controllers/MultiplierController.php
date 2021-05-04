@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Entry;
+use App\Models\Order;
 use App\Models\Multiplier;
 use Illuminate\Http\Request;
-use App\Http\Requests\SaveMultiplierRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\SaveMultiplierRequest;
 
 class MultiplierController extends Controller
 {
@@ -109,7 +111,11 @@ class MultiplierController extends Controller
     public function addSnippet($storeThemes, $shop, $multiplierValue, $multiplierLabel = 'Entries'){
         logger(json_encode($storeThemes));
 
-        foreach ($storeThemes as $theme) {
+		// $multiplier_list = DB::table('multipliers')
+		// ->select('value', 'created_at')
+		// ->get();
+
+		foreach ($storeThemes as $theme) {
 
             // add snippet
             try {
@@ -136,6 +142,14 @@ class MultiplierController extends Controller
                     '/admin/api/themes/'.$theme->id.'/assets.json',
                     ['asset' => ['key' => 'snippets/entry-points2.liquid', 'value' => $snippet2] ]
                 );
+
+				// $snippet3 = (string) "{{ $multiplier_list }}";
+
+				// $add_snippet3 = $shop->api()->request(
+                //     'PUT',
+                //     '/admin/api/themes/'.$theme->id.'/assets.json',
+                //     ['asset' => ['key' => 'snippets/order_multiplier.liquid', 'value' => $snippet3] ]
+                // );
 
             } catch(\GuzzleHttp\Exception\ClientException $e){
                 logger('add addSnippet throws client exception');
