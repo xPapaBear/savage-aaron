@@ -1,0 +1,9 @@
+[03-May-2021 10:11:20 America/Chicago] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[03-May-2021 10:11:20 America/Chicago] PHP Warning:  Module 'SourceGuardian' already loaded in Unknown on line 0
+[03-May-2021 10:16:29 America/Chicago] PHP Parse error:  syntax error, unexpected ':', expecting '{' in /home1/euvijp47/staging.savageapi.bestworkz.com/vendor/symfony/polyfill-php80/bootstrap.php on line 23
+[04-May-2021 02:51:18 America/Chicago] PHP Warning:  Unsupported declare 'strict_types' in /home1/euvijp47/staging.savageapi.bestworkz.com/vendor/phpunit/phpunit/src/Framework/Assert/Functions.php on line 1
+[04-May-2021 02:51:18 America/Chicago] PHP Fatal error:  Default value for parameters with a class type hint can only be NULL in /home1/euvijp47/staging.savageapi.bestworkz.com/vendor/phpunit/phpunit/src/Framework/Assert/Functions.php on line 89
+[04-May-2021 02:53:03 America/Chicago] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[04-May-2021 02:53:03 America/Chicago] PHP Warning:  Module 'SourceGuardian' already loaded in Unknown on line 0
+[04-May-2021 02:53:10 America/Chicago] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[04-May-2021 02:53:10 America/Chicago] PHP Warning:  Module 'SourceGuardian' already loaded in Unknown on line 0

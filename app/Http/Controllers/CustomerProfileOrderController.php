@@ -8,7 +8,7 @@ use App\Models\Multiplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CustomerProfilleOrderControler extends Controller
+class CustomerProfileOrderController extends Controller
 {
     public function getUserProfileOrders( Request $request, $id ) {
         $shop = $this->checkAuth();

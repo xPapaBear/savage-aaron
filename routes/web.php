@@ -14,14 +14,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/test/test', function() {
+    return "HELLO";
+});
 // Route::get('/login', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', function () {
     return view('spa');
 })->middleware(['auth.shopify'])->name('home');
 Route::get('/{path}', [App\Http\Controllers\SpaController::class, 'index'])->where('path', '(.*)');
-Route::get('/send', function(){
-	Mail::mailer('smtp')->to('dummyemail@gmail.com')->send(new EmailEntry());
-	logger('testt');
-});

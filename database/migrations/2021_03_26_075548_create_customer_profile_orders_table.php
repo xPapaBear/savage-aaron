@@ -20,7 +20,7 @@ class CreateCustomerProfileOrdersTable extends Migration
             $table->float( 'total_items_price' );
             $table->integer( 'multiplier' );
             $table->integer( 'total_entry_points' );
-            $table->json( 'metadata' )->nullable();
+            $table->longText( 'metadata' )->nullable();
             $table->timestamps();
         });
     }
