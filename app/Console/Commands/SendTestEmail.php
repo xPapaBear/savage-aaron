@@ -42,8 +42,8 @@ class SendTestEmail extends Command
      */
     public function handle()
     {
-        Mail::to( $this->argument( 'email' ) )->send( new EmailEntry( 25, 5, 'Doncovish Dorvilma', 120, 120, 1547 ) );
-        /* $customer = Customer::where( 'email', $this->argument( 'email' ) )->first();
+        // Mail::to( $this->argument( 'email' ) )->send( new EmailEntry( 25, 5, 'Doncovish Dorvilma', 120, 120, 1547 ) );
+        $customer = Customer::where( 'email', $this->argument( 'email' ) )->first();
         if ( $customer ) {
             $customer_id = $customer->id;
             $order = Order::where( 'customer_id', $customer_id )->orderBy( 'id', 'DESC' )->get();
@@ -51,6 +51,6 @@ class SendTestEmail extends Command
             if ( count( $order ) > 0 ) {
                 Mail::to( $this->argument( 'email' ) )->send( new EmailEntry( 25, 5, 'Doncovish Dorvilma', 120, 120, 1547 ) );
             }
-        } */
+        }
     }
 }

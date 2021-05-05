@@ -92,7 +92,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'support@savagecardclub.com'),
-        'name' => env('MAIL_FROM_NAME', 'Giveaway Collection App'),
+        'name' => 'Savage Card Club',
     ],
 
     /*

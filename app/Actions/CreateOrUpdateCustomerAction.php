@@ -3,11 +3,15 @@ namespace App\Actions;
 
 use App\Models\User;
 use App\Models\Customer;
+use Illuminate\Support\Facades\Log;
 
 class CreateOrUpdateCustomerAction
 {
 	public function execute(string $shopDomain, object $data)
 	{
+		Log::info( '===== CLASS :: CreateOrUpdateCustomerAction START =====' );
+		Log::info( '$data :: ' . json_encode( $data ) );
+
 		$shop = User::where('name', $shopDomain)->first();
 
 		$customer = Customer::updateOrCreate(
@@ -25,7 +29,8 @@ class CreateOrUpdateCustomerAction
 			]
 		);
 
-		logger('Customer = ' . json_encode($customer->email));
+		Log::info( '$customer :: ' . json_encode( $customer ) );
+		Log::info( '===== CLASS :: CreateOrUpdateCustomerAction END =====' );
 
 		return $customer;
 	}

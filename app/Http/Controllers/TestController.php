@@ -26,14 +26,14 @@ class TestController extends Controller
     /**
      * @test OrderPaidJob.php
      */
-    public function testOrderPaidJob( string $shopDomain, object $data, object $customer ) {
+    /* public function testOrderPaidJob( string $shopDomain, object $data, object $customer ) {
         $this->testCreateOrderActionExecute( $shopDomain, $data, $customer );
-    }
+    } */
 
     /**
      * @test CreateOrderAction.php -> execute
      */
-    public function testCreateOrderActionExecute( string $shopDomain, object $data, object $customer ) {
+    /* public function testCreateOrderActionExecute( string $shopDomain, object $data, object $customer ) {
 		if ( isset($data) && empty($data) ) {
 			return false;
 		}
@@ -107,12 +107,12 @@ class TestController extends Controller
 			Log::error( $e->getTraceAsString() );
 			DB::rollback();
 		}
-    }
+    } */
 
     /**
      * @test CreateEntryAction.php -> execute
      */
-    public function testCreateEntryExecute( $shop, $orderId, $storeCustomerId, $multiplierId, $points = 0 ) {
+    /* public function testCreateEntryExecute( $shop, $orderId, $storeCustomerId, $multiplierId, $points = 0 ) {
 		try {
 			$entry = Entry::updateOrCreate(
 				['order_id' => $orderId],
@@ -146,5 +146,5 @@ class TestController extends Controller
 			Log::error( $e->getMessage() );
 			Log::error( $e->getTraceAsString() );
 		}
-    }
+    } */
 }
