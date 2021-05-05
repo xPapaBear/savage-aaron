@@ -3,6 +3,7 @@ import {
   Avatar,
   Badge,
   Card,
+  Button,
   DataTable,
   DatePicker,
   Filters,
@@ -222,6 +223,7 @@ const CustomerEntries = ({ location }) => {
     phone ?? '--',
     <Badge status="success">{total_points}</Badge>,
     <Badge status="info">{shopApi ? currencyFormat(shopApi, total_spent) : total_spent}</Badge>,
+	<Button external={false}>Reset</Button>,
   ]
 
   const rows = ! isEmpty(filteredCustomers) ? filteredCustomers?.data?.map(
@@ -239,7 +241,7 @@ const CustomerEntries = ({ location }) => {
         <Card.Section>
           <Filters
             queryValue={queryValue}
-            filters={filters}
+            filters={filters} 
             appliedFilters={appliedFilters}
             onQueryChange={handleFiltersQueryChange}
             onQueryClear={handleQueryValueRemove}
@@ -253,6 +255,7 @@ const CustomerEntries = ({ location }) => {
             'text',
             'text',
             'text',
+            'text',
           ]}
           headings={[
             'Name',
@@ -260,6 +263,7 @@ const CustomerEntries = ({ location }) => {
             'Phone Number',
             'Total Entries',
             'Total Spent',
+            'Action',
           ]}
           rows={rows}
         />
@@ -274,4 +278,4 @@ const CustomerEntries = ({ location }) => {
   return actualPageMarkup;
 }
 
-export default CustomerEntries;
+export default CustomerEntries; 
