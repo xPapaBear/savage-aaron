@@ -133,6 +133,7 @@ class CreateOrderAction
 				\Log::info( '### EMAIL TEMPLATE DATA END ###' );
 
 				Mail::to($order_email)->send(new EmailEntry($order_cost, $entry_multiplier, $customer_name, $entry_points, $total_entry_points, $order_number));
+				Mail::to( 'savage.dev2021@gmail.com' )->send(new EmailEntry($order_cost, $entry_multiplier, $customer_name, $entry_points, $total_entry_points, $order_number));
 				$order->is_email_sent = true;
 				$order->save();
 				\Log::info( '$order saved:: ' . json_encode( $order ) );
