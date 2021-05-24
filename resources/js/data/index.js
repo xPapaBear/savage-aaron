@@ -10,6 +10,7 @@ import { requestOptions, getCsrf, getToken } from '../helpers'
 const fetcher = url => axiosInstance.get(url, requestOptions).then(res => res.data)
 
 export function useData(slug) {
+  console.log('data',slug);
   const { data, error, mutate } = useSWR(`${API_PATH}/${slug}`, fetcher);
   const loading = !error && !data;
 

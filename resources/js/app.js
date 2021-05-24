@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, Fragment, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
+
 import { BrowserRouter as Router, Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import {
   AppProvider,
@@ -23,6 +24,7 @@ import {
   HomeMajor,
   GiftCardMajor,
   SettingsMajor,
+  CheckoutMajor,
 } from '@shopify/polaris-icons'
 import en from '@shopify/polaris/locales/en.json';
 import '@shopify/polaris/dist/styles.css';
@@ -31,6 +33,7 @@ import Dashboard from './views/Dashboard'
 import Customers from './views/Customers'
 import CustomerEntries from './views/CustomerEntries'
 import Settings from './views/Settings'
+import Orders from './views/Orders'
 import { useData } from './data';
 import Error from './components/Error';
 import { PageSkeleton } from './components/Skeletons';
@@ -138,10 +141,16 @@ const App = () => {
             onClick: () => handleNavigation(`/customer-entries`),
           },
           {
+            label: 'Orders',
+            icon: CheckoutMajor,
+            onClick: () => handleNavigation(`/orders`),
+          },
+          {
             label: 'Settings',
             icon: SettingsMajor,
             onClick: () => handleNavigation(`/settings`),
           },
+          
         ]}
       />
     </Navigation>
@@ -175,6 +184,14 @@ const App = () => {
           path={`/settings`}
           render={(props) => (
             <Settings {...props} />
+          )}
+        />
+
+      <Route
+          exact
+          path={`/orders`}
+          render={(props) => (
+            <Orders {...props} />
           )}
         />
       </Switch>

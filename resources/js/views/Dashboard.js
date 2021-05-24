@@ -105,6 +105,7 @@ const Dashboard = ({ location, response }, data, test) => {
           </Layout.Section>
         </Layout>
     </Page>
+   
   );
 }
 

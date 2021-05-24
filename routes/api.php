@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\MultiplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
@@ -7,6 +6,7 @@ use App\Http\Controllers\CustomerProfileOrderController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EntryController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,7 +30,11 @@ Route::group(['middleware' => 'auth.token', 'prefix' => 'app'], function () {
         # /api/app/user
         Route::get('/', [UserController::class, 'index']);
     });
-    
+    // Order Groups
+       Route::group(['prefix' => 'orders'], function () {
+            Route::get('/', [OrderController::class, 'index']);
+        });
+     
     // Dashboard Groups
     Route::group(['prefix' => 'dashboard'], function () {
         # /api/app/dashboard
@@ -82,3 +86,5 @@ Route::group(['prefix' => 'test'], function () {
      */
     Route::get('email', [TestController::class, 'testTopCustomerEP']);
 });
+
+

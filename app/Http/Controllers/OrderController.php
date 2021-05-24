@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Order;
+use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -14,7 +15,15 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        
+         $shop = $this-> checkAuth();
+        // $orders = Order::with(['entry'])->get();
+        $orders = $shop->orders()->with(['entry'])->get();
+        return response()->json([
+            'success' => true,
+             'data'=> $orders
+            
+        ]);
     }
 
     /**
